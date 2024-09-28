@@ -1,0 +1,97 @@
+{
+    "person": {
+        "name": "John Doe",
+        "role": "Software Engineer"
+    },
+    "contact": {
+        "email": "johndoe@gmail.com",
+        "location": "California, Irvine",
+        "linkedin": "linkedin.com/in/johndoe"
+    },
+    "sections": [
+        {
+            "title": "Profile",
+            "articles": [
+                {
+                    "desc": "Experienced software developer in finance industries with knowledge in Cloud and DevOps tools. Passionate game developer with +3 years of experience, using Unity and Godot."
+                }
+            ]
+        },
+        {
+            "title": "Professional Experience",
+            "articles": [
+                {
+                    "what": "Lead Godot Developer",
+                    "where": "Buggysoft LLC",
+                    "when": "04/2020 - 10/2022",
+                    "list": [
+                        "Directed a team of 5 in developing a virtual reality education platform, increasing user engagement by 100% over six month.",
+                        "Negotiated with hardware vendors to procure high-quality VR equipment at a 15% cost reduction.",
+                        "Devised a custom shader library for Godot, enhacing the visual fidelity for all the studio's game titles."
+                    ]
+                },
+                {
+                    "what": "Unity Game Developer",
+                    "where": "Etereomax",
+                    "when": "01/2019 - 01/2020",
+                    "list": [
+                        "Crafted new game mechanics for an upcoming RPG title, which increased projected player retention by 35%.",
+                        "Optimized existing codebase leading to a 40% reduction in memory usage, and smoother gameplay experience.",
+                        "Initiated a cross-functional workflow with the art team to streamline asset integration"
+                    ]
+                },
+                {
+                    "what": "Software Engineer",
+                    "where": "Some Big Bank",
+                    "when": "01/2016 - 01/2019",
+                    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                }
+            ]
+        },
+        {
+            "title": "Education",
+            "articles": [
+                {
+                    "what": "Bachelor in Computer Science",
+                    "where": "University of California, Irvine",
+                    "when": "04/2018 - 04/2020"
+                }
+            ]
+        },
+        {
+            "title": "Courses",
+            "articles": [
+                {
+                    "what": "Connect and Protect: Networks and Network Security",
+                    "where": "Google"
+                },
+                {
+                    "what": "Concurrency in Go",
+                    "where": "University of California, Irvine"
+                },
+                {
+                    "what": "Gamedev from Zero with Godot 4",
+                    "where": "GdQuest"
+                }
+            ]
+        },
+        {
+            "title": "Skills",
+            "articles": [
+                {
+                    "full-list": [
+                        "C++",
+                        "GLSL",
+                        "GdScript",
+                        "Git",
+                        "Github Actions",
+                        "Docker",
+                        "Kubernetes",
+                        "AWS",
+                        "Ansible"
+                    ]
+                }
+            ]
+        }
+    ]
+}
