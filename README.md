@@ -3,8 +3,7 @@
 Command-line application that allows you to create professional resumes in a
 specific visual format quickly and easily, using HTML.
 
-HTML allows you to open your curriculum or resume using any web browser, and
-save as PDF.
+[See an example](example/example.pdf).
 
 ## Building
 
@@ -30,3 +29,6 @@ To generate the curriculum or resume:
 ```bash
 cvres ./example.json ./output.html
 ```
+
+This will generate an HTML file, if you want to save it to PDF, you can use
+any web browser that has that feature.  
