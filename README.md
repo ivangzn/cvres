@@ -24,9 +24,6 @@ Supported type of files:
 - YAML, [see example](example/example.yaml)
 - JSON, [see example](example/example.json)
 
-In order to render the HTML properly, you must have installed
-[Alegreya](https://fonts.google.com/specimen/Alegreya) font in your system.
-
 To generate the curriculum or resume:
 
 ```bash
