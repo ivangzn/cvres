@@ -52,7 +52,7 @@ func main() {
 	}
 	defer file.Close()
 
-	cv.Html(file)
+	err = cv.Html(file)
 	if err != nil {
 		panic(err)
 	}
