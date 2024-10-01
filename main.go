@@ -24,20 +24,20 @@ func main() {
 		outPath = "cv.html"
 	}
 
-	// Read input file
-	file, err := os.Open(inPath)
+	// Read input inFile
+	inFile, err := os.Open(inPath)
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()
+	defer inFile.Close()
 
 	cv := &encode.Curriculum{}
 	inType := filepath.Ext(inPath)
 	switch inType {
 	case ".yaml", ".yml":
-		err = yaml.NewDecoder(file).Decode(cv)
+		err = yaml.NewDecoder(inFile).Decode(cv)
 	case ".json":
-		err = json.NewDecoder(file).Decode(cv)
+		err = json.NewDecoder(inFile).Decode(cv)
 	default:
 		panic("unsupported file extension.")
 	}
@@ -46,13 +46,13 @@ func main() {
 	}
 
 	// Generate Cv
-	file, err = os.Create(outPath)
+	outFile, err := os.Create(outPath)
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()
+	defer outFile.Close()
 
-	err = cv.Html(file)
+	err = cv.Html(outFile)
 	if err != nil {
 		panic(err)
 	}
