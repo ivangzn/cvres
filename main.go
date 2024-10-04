@@ -16,7 +16,7 @@ func main() {
 
 	inPath := flag.Arg(0)
 	if inPath == "" {
-		panic("missing json file path.")
+		panic("missing input file path.")
 	}
 
 	outPath := flag.Arg(1)
