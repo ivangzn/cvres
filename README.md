@@ -7,10 +7,15 @@ specific visual format quickly and easily, using HTML.
 
 ## Building
 
-To build the executable:
+Clone this repo:
 
 ```bash
 git clone https://github.com/ivangzn/cvres
+```
+
+Compile cvres:
+
+```bash
 go build .
 ```
 
@@ -30,5 +35,11 @@ To generate the curriculum or resume:
 cvres ./example.json ./output.html
 ```
 
-This will generate an HTML file, if you want to save it to PDF, you can use
+This will generate a minified HTML file, if you want to save it to PDF, you can use
 any web browser that has that feature.  
+
+### Flags
+
+You can use the following flags, to customize your output file:
+
+- `-formatted` outputs an additional prettified file, if possible.
