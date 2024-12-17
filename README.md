@@ -1,5 +1,11 @@
 # cvres
 
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ivangzn/cvres/go.yml?branch=main)](https://github.com/ivangzn/cvres/actions)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ivangzn/cvres)](https://goreportcard.com/report/github.com/ivangzn/cvres)
+[![License](https://img.shields.io/github/license/ivangzn/cvres)](https://github.com/ivangzn/cvres/blob/main/LICENSE)
+
+## About
+
 Command-line application that allows you to create professional resumes in a
 specific visual format quickly and easily, using HTML.
 
