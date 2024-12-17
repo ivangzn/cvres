@@ -24,7 +24,7 @@ func main() {
 
 	outPath := flag.Arg(1)
 	if outPath == "" {
-		outPath = "cv.html"
+		outPath = "resume.html"
 	}
 
 	// Read input inFile
