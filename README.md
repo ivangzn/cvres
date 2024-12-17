@@ -27,25 +27,25 @@ go build .
 
 ## Usage
 
-To fill your resume or curriculum vitae, you first need to create a file
-containing all your data.
+To fill your resume, you first need to create a file containing all your
+profile data.
 
 Supported type of files:
 
-- YAML, [see example](example/example.yaml)
-- JSON, [see example](example/example.json)
+- YAML, [see example](example/example.yaml).
+- JSON, [see example](example/example.json).
 
-To generate the curriculum or resume:
+To generate the resume:
 
 ```bash
 cvres ./example.json ./output.html
 ```
 
-This will generate a minified HTML file, if you want to save it to PDF, you can use
-any web browser that has that feature.  
+This will generate a minified HTML file, if you want to save it as PDF, you can
+use any web browser.  
 
 ### Flags
 
 You can use the following flags, to customize your output file:
 
-- `-formatted` outputs an additional prettified file, if possible.
+- `-formatted` outputs an additional prettified file.
