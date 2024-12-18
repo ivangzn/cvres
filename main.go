@@ -3,8 +3,10 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/ivangzn/cvres/encode"
 	"github.com/ivangzn/cvres/styles"
@@ -12,8 +14,15 @@ import (
 )
 
 func main() {
-	styleName := flag.String("style", "ale", "style name to be used.")
+	styleName := flag.String("style", "ale", "style name to be used. Use -styles to list them all.")
+	listStyles := flag.Bool("styles", false, "show all style names.")
 	flag.Parse()
+
+	if *listStyles {
+		names := strings.Join(styles.Names(), ", ")
+		fmt.Printf("avaiable styles: %s\n", names)
+		return
+	}
 
 	inPath := flag.Arg(0)
 	if inPath == "" {

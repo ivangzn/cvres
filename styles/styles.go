@@ -21,3 +21,11 @@ func NewStyle(name string, resume *encode.Resume) (encode.Encoder, error) {
 	}
 	return enc(*resume), nil
 }
+
+func Names() []string {
+	names := make([]string, 0, len(encoders))
+	for name := range encoders {
+		names = append(names, name)
+	}
+	return names
+}
