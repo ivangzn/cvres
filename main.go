@@ -35,8 +35,7 @@ func main() {
 	}
 
 	resume := LoadResumeData(inPath)
-	GenerateResume(resume, outPath, *styleName)
-
+	GenerateResume(resume, outPath, strings.ToLower(*styleName))
 }
 
 func LoadResumeData(path string) *encode.Resume {
