@@ -1,6 +1,10 @@
 package encode
 
-type Curriculum struct {
+import (
+	"io"
+)
+
+type Resume struct {
 	Person   Person    `json:"person" yaml:"person"`
 	Contact  Contact   `json:"contact" yaml:"contact"`
 	Sections []Section `json:"sections" yaml:"sections"`
@@ -29,4 +33,9 @@ type Article struct {
 	Desc     string   `json:"desc" yaml:"desc"`
 	List     []string `json:"list" yaml:"list"`
 	FullList []string `json:"full-list" yaml:"full-list"`
+}
+
+// Encoder handles the encoding of any Resume.
+type Encoder interface {
+	io.WriterTo
 }

@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/ivangzn/cvres/encode"
+	"github.com/ivangzn/cvres/styles"
 	"github.com/yosssi/gohtml"
 	"gopkg.in/yaml.v3"
 )
@@ -34,13 +35,13 @@ func main() {
 	}
 	defer inFile.Close()
 
-	cv := &encode.Curriculum{}
+	resume := &encode.Resume{}
 	inType := filepath.Ext(inPath)
 	switch inType {
 	case ".yaml", ".yml":
-		err = yaml.NewDecoder(inFile).Decode(cv)
+		err = yaml.NewDecoder(inFile).Decode(resume)
 	case ".json":
-		err = json.NewDecoder(inFile).Decode(cv)
+		err = json.NewDecoder(inFile).Decode(resume)
 	default:
 		panic("unsupported file extension.")
 	}
@@ -55,7 +56,12 @@ func main() {
 	}
 	defer outFile.Close()
 
-	err = cv.Html(outFile)
+	style, err := styles.NewStyle("ale", resume)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = style.WriteTo(outFile)
 	if err != nil {
 		panic(err)
 	}
