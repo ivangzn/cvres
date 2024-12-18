@@ -43,9 +43,3 @@ cvres ./example.json ./output.html
 
 This will generate a minified HTML file, if you want to save it as PDF, you can
 use any web browser.  
-
-### Flags
-
-You can use the following flags, to customize your output file:
-
-- `-formatted` outputs an additional prettified file.
