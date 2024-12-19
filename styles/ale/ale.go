@@ -49,7 +49,8 @@ func (a *Ale) head() Node {
 }
 
 func (a *Ale) css() Node {
-	return Rawf("<style>%s</style>", cssContent)
+	style := encode.MinifyCSS(cssContent)
+	return Rawf("<style>%s</style>", style)
 }
 
 func (a *Ale) body() Node {
