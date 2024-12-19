@@ -44,6 +44,12 @@ cvres ./example.json ./output.html
 This will generate a minified HTML file, if you want to save it as PDF, you can
 use any web browser.  
 
+To generate the resume, using a specific style:
+
+```bash
+cvres ./example.json ./output.html -style ale
+```
+
 ## Flags
 
 - `-style` sets the style to use when generating the resume.
