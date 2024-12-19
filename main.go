@@ -53,7 +53,7 @@ func LoadResumeData(path string) *encode.Resume {
 	case ".json":
 		err = json.NewDecoder(inFile).Decode(resume)
 	default:
-		exit(err)
+		exit("file extension not supported")
 	}
 	if err != nil {
 		exit(err)
