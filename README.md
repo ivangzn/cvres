@@ -50,6 +50,12 @@ To generate the resume, using a specific style:
 cvres ./example.json ./output.html -style ale
 ```
 
+## Styles
+
+The following styles are avaiable:
+
+- Ale
+
 ## Flags
 
 - `-style` sets the style to use when generating the resume.
