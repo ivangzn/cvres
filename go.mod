@@ -8,4 +8,8 @@ require (
 	maragu.dev/gomponents v1.0.0
 )
 
-require golang.org/x/net v0.29.0 // indirect
+require (
+	github.com/tdewolff/minify/v2 v2.21.2 // indirect
+	github.com/tdewolff/parse/v2 v2.7.19 // indirect
+	golang.org/x/net v0.29.0 // indirect
+)
