@@ -26,8 +26,7 @@ func main() {
 
 	inPath := flag.Arg(0)
 	if inPath == "" {
-		fmt.Println("missing input file path.")
-		os.Exit(1)
+		exit("missing input file path")
 	}
 
 	outPath := flag.Arg(1)
@@ -42,8 +41,7 @@ func main() {
 func LoadResumeData(path string) *encode.Resume {
 	inFile, err := os.Open(path)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		exit(err)
 	}
 	defer inFile.Close()
 
@@ -55,12 +53,10 @@ func LoadResumeData(path string) *encode.Resume {
 	case ".json":
 		err = json.NewDecoder(inFile).Decode(resume)
 	default:
-		fmt.Println("unsupported file extension.")
-		os.Exit(1)
+		exit(err)
 	}
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		exit(err)
 	}
 
 	return resume
@@ -69,20 +65,22 @@ func LoadResumeData(path string) *encode.Resume {
 func GenerateResume(data *encode.Resume, path string, styleName string) {
 	outFile, err := os.Create(path)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		exit(err)
 	}
 
 	defer outFile.Close()
 	style, err := styles.NewStyle(styleName, data)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		exit(err)
 	}
 
 	_, err = style.WriteTo(outFile)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		exit(err)
 	}
+}
+
+func exit(cause any) {
+	fmt.Println(cause)
+	os.Exit(1)
 }
