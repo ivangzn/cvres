@@ -7,13 +7,14 @@ import (
 	"github.com/ivangzn/cvres/styles/ale"
 )
 
-// encoderCtor represents a function that generates an encode.Encoder
+// encoderCtor represents a constructor for an encode.Encoder.
 type encoderCtor func(encode.Resume) encode.Encoder
 
 var encoders = map[string]encoderCtor{
 	"ale": ale.New,
 }
 
+// NewStyle returns a resume encoder that uses a given style.
 func NewStyle(name string, resume *encode.Resume) (encode.Encoder, error) {
 	enc, ok := encoders[name]
 	if !ok {
@@ -22,6 +23,7 @@ func NewStyle(name string, resume *encode.Resume) (encode.Encoder, error) {
 	return enc(*resume), nil
 }
 
+// Names returns the list of available styles.
 func Names() []string {
 	names := make([]string, 0, len(encoders))
 	for name := range encoders {

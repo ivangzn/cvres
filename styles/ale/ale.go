@@ -14,14 +14,17 @@ import (
 //go:embed ale.css
 var cssContent string
 
+// Ale is a resume style based on the Google's Alegreya font.
 type Ale struct {
 	resume encode.Resume
 }
 
+// New creates the Ale resume style for a given resume.
 func New(r encode.Resume) encode.Encoder {
 	return &Ale{resume: r}
 }
 
+// WriteTo writes the resume in HTML format.
 func (a *Ale) WriteTo(w io.Writer) (n int64, err error) {
 	bc := &encode.ByteCounter{}
 	mw := io.MultiWriter(w, bc)
