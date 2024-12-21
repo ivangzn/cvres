@@ -16,7 +16,7 @@ var cssContent string
 
 // Ale is a resume style based on Google's Alegreya font.
 type Ale struct {
-	resume resume.Resume
+	resume *resume.Resume
 }
 
 // New creates the Ale resume style.
@@ -26,7 +26,7 @@ func New() resume.Style {
 
 // WriteTo writes the resume in HTML format.
 func (a *Ale) WriteTo(w io.Writer, r resume.Resume) (n int64, err error) {
-	a.resume = r
+	a.resume = &r
 
 	bc := &resume.ByteCounter{}
 	mw := io.MultiWriter(w, bc)
