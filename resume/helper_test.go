@@ -5,7 +5,6 @@ import (
 )
 
 func TestByteCounter(t *testing.T) {
-
 	tests := []struct {
 		input    []byte
 		expected int64
