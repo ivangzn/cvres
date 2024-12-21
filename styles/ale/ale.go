@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/ivangzn/cvres/encode"
+	"github.com/ivangzn/cvres/resume"
 	"github.com/ivangzn/cvres/static"
 	. "maragu.dev/gomponents"
 	. "maragu.dev/gomponents/html"
@@ -14,19 +14,21 @@ import (
 //go:embed ale.css
 var cssContent string
 
-// Ale is a resume style based on the Google's Alegreya font.
+// Ale is a resume style based on Google's Alegreya font.
 type Ale struct {
-	resume encode.Resume
+	resume resume.Resume
 }
 
-// New creates the Ale resume style for a given resume.
-func New(r encode.Resume) encode.Encoder {
-	return &Ale{resume: r}
+// New creates the Ale resume style.
+func New() resume.Style {
+	return &Ale{}
 }
 
 // WriteTo writes the resume in HTML format.
-func (a *Ale) WriteTo(w io.Writer) (n int64, err error) {
-	bc := &encode.ByteCounter{}
+func (a *Ale) WriteTo(w io.Writer, r resume.Resume) (n int64, err error) {
+	a.resume = r
+
+	bc := &resume.ByteCounter{}
 	mw := io.MultiWriter(w, bc)
 	err = a.html().Render(mw)
 	if err != nil {
@@ -52,7 +54,7 @@ func (a *Ale) head() Node {
 }
 
 func (a *Ale) css() Node {
-	style := encode.MinifyCSS(cssContent)
+	style := resume.MinifyCSS(cssContent)
 	return Rawf("<style>%s</style>", style)
 }
 
@@ -90,7 +92,7 @@ func (a *Ale) sections() Node {
 		return Li(Text(item))
 	}
 
-	article := func(a encode.Article) Node {
+	article := func(a resume.Article) Node {
 		hasList := len(a.List) > 0
 		hasFullList := len(a.FullList) > 0
 		return Article(
@@ -114,7 +116,7 @@ func (a *Ale) sections() Node {
 		)
 	}
 
-	section := func(s encode.Section) Node {
+	section := func(s resume.Section) Node {
 
 		title := strings.ToUpper(s.Title)
 		return Section(

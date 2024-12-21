@@ -1,16 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
-	"github.com/ivangzn/cvres/encode"
+	"github.com/ivangzn/cvres/resume"
 	"github.com/ivangzn/cvres/styles"
-	"gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -18,6 +15,7 @@ func main() {
 	listStyles := flag.Bool("styles", false, "show all style names.")
 	flag.Parse()
 
+	// Validate CLI flags.
 	if *listStyles {
 		names := strings.Join(styles.Names(), ", ")
 		fmt.Printf("avaiable styles: %s\n", names)
@@ -34,45 +32,34 @@ func main() {
 		outPath = "resume.html"
 	}
 
-	resume := LoadResumeData(inPath)
-	GenerateResume(resume, outPath, strings.ToLower(*styleName))
-}
-
-func LoadResumeData(path string) *encode.Resume {
-	inFile, err := os.Open(path)
+	// Generate resume.
+	data, err := os.Open(inPath)
 	if err != nil {
 		exit(err)
 	}
-	defer inFile.Close()
+	defer data.Close()
 
-	resume := &encode.Resume{}
-	inType := filepath.Ext(path)
-	switch inType {
-	case ".yaml", ".yml":
-		err = yaml.NewDecoder(inFile).Decode(resume)
-	case ".json":
-		err = json.NewDecoder(inFile).Decode(resume)
-	default:
-		exit("file extension not supported")
+	output, err := os.Create(outPath)
+	if err != nil {
+		exit(err)
 	}
+	defer output.Close()
+
+	decoder, err := resume.NewDecoder(data)
 	if err != nil {
 		exit(err)
 	}
 
-	return resume
-}
-
-func GenerateResume(data *encode.Resume, path string, styleName string) {
-	outFile, err := os.Create(path)
+	style, err := styles.NewStyle(*styleName)
 	if err != nil {
 		exit(err)
 	}
-	defer outFile.Close()
 
-	styles.WriteResume(styleName, data, outFile)
+	resume, err := resume.NewResume(style, decoder)
 	if err != nil {
 		exit(err)
 	}
+	resume.WriteTo(output)
 }
 
 func exit(cause any) {
