@@ -2,6 +2,7 @@ package styles
 
 import (
 	"errors"
+	"io"
 
 	"github.com/ivangzn/cvres/encode"
 	"github.com/ivangzn/cvres/styles/ale"
@@ -14,15 +15,6 @@ var encoders = map[string]encoderCtor{
 	"ale": ale.New,
 }
 
-// NewStyle returns a resume encoder that uses a given style.
-func NewStyle(name string, resume *encode.Resume) (encode.Encoder, error) {
-	enc, ok := encoders[name]
-	if !ok {
-		return nil, errors.New("style not found")
-	}
-	return enc(*resume), nil
-}
-
 // Names returns the list of available styles.
 func Names() []string {
 	names := make([]string, 0, len(encoders))
@@ -30,4 +22,24 @@ func Names() []string {
 		names = append(names, name)
 	}
 	return names
+}
+
+// WriteResume writes a resume with a given style.
+func WriteResume(style string, resume *encode.Resume, out io.Writer) error {
+	encoder, err := getStyle(style, resume)
+	if err != nil {
+		return err
+	}
+
+	_, err = encoder.WriteTo(out)
+	return err
+}
+
+// getStyle gets a style by its name, returns nil and an error if the style doesn't exist.
+func getStyle(name string, resume *encode.Resume) (encode.Encoder, error) {
+	enc, ok := encoders[name]
+	if !ok {
+		return nil, errors.New("style not found")
+	}
+	return enc(*resume), nil
 }

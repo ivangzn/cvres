@@ -67,14 +67,9 @@ func GenerateResume(data *encode.Resume, path string, styleName string) {
 	if err != nil {
 		exit(err)
 	}
-
 	defer outFile.Close()
-	style, err := styles.NewStyle(styleName, data)
-	if err != nil {
-		exit(err)
-	}
 
-	_, err = style.WriteTo(outFile)
+	styles.WriteResume(styleName, data, outFile)
 	if err != nil {
 		exit(err)
 	}
