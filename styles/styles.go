@@ -7,7 +7,7 @@ import (
 	"github.com/ivangzn/cvres/styles/ale"
 )
 
-// encoderCtor represents a constructor for an encode.Encoder.
+// encoderCtor represents a constructor for a resume style.
 type encoderCtor func() resume.Style
 
 // encoders holds references for the name and constructor of each style supported.
