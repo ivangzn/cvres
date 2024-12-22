@@ -47,7 +47,7 @@ use any web browser.
 To generate the resume, using a specific style:
 
 ```bash
-cvres ./example.json ./output.html -style ale
+cvres -style ale ./example.json ./output.html 
 ```
 
 ## Styles
