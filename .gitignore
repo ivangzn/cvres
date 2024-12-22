@@ -2,3 +2,6 @@
 /*.yaml
 /*.yml
 /*.json
+
+# IDEs
+.vscode
