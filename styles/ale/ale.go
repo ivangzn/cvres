@@ -116,7 +116,6 @@ func (a *Ale) sections() Node {
 	}
 
 	section := func(s resume.Section) Node {
-
 		title := strings.ToUpper(s.Title)
 		return Section(
 			Class("info"),
