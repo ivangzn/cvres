@@ -59,7 +59,11 @@ func main() {
 	if err != nil {
 		exit(err)
 	}
-	resume.WriteTo(output)
+
+	_, err = resume.WriteTo(output)
+	if err != nil {
+		exit(err)
+	}
 }
 
 func exit(cause any) {
