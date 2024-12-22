@@ -3,6 +3,7 @@ package resume
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -55,8 +56,13 @@ func NewResume(style Style, decoder Decoder) (*Resume, error) {
 
 // WriteTo writes a resume to a writer.
 func (r *Resume) WriteTo(w io.Writer) (int64, error) {
-	n, err := r.style.WriteTo(w, *r)
-	return n, err
+	minifier := NewHTMLMinifier()
+	_, err := r.style.WriteTo(minifier, *r)
+	if err != nil {
+		return 0, fmt.Errorf("style can't write to minifier: %w", err)
+	}
+
+	return minifier.WriteTo(w)
 }
 
 // Style applies a specific way of rendering a Resume,

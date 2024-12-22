@@ -54,8 +54,7 @@ func (a *Ale) head() Node {
 }
 
 func (a *Ale) css() Node {
-	style := resume.MinifyCSS(cssContent)
-	return Rawf("<style>%s</style>", style)
+	return Rawf("<style>%s</style>", cssContent)
 }
 
 func (a *Ale) body() Node {
