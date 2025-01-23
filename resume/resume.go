@@ -65,6 +65,10 @@ func (r *Resume) WriteTo(w io.Writer) (int64, error) {
 	return minifier.WriteTo(w)
 }
 
+func (r *Resume) SetStyle(style Style) {
+	r.style = style
+}
+
 // Style applies a specific way of rendering a Resume,
 // and writes the result to a io.Writer by using WriteTo.
 type Style interface {
