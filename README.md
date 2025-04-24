@@ -6,8 +6,8 @@
 
 ## About
 
-Command-line application that allows you to create professional resumes in a
-specific visual format quickly and easily, using HTML.
+Command-line application that allows to create professional resumes with
+different visual formats quickly and easily.
 
 [See an example](example/example.pdf).
 
