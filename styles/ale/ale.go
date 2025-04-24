@@ -15,7 +15,6 @@ var html string
 
 // Ale is a resume style based on Google's Alegreya font.
 type Ale struct {
-	resume *resume.Resume
 }
 
 // New creates the Ale resume style.
@@ -33,8 +32,6 @@ type templateData struct {
 
 // WriteTo writes the resume in HTML format.
 func (a *Ale) WriteTo(w io.Writer, r resume.Resume) (int64, error) {
-	a.resume = &r
-
 	data := templateData{
 		Resume:      r,
 		EmailSvg:    template.HTML(static.EmailSvg),
