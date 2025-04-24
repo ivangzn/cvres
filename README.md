@@ -35,6 +35,8 @@ Supported type of files:
 - YAML, [see example](example/example.yaml).
 - JSON, [see example](example/example.json).
 
+See a more readable specification of the format [here](example/README.md).
+
 To generate the resume:
 
 ```bash
