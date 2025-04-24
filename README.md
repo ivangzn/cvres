@@ -16,7 +16,7 @@ different visual formats quickly and easily.
 Clone this repo:
 
 ```bash
-git clone https://github.com/ivangzn/cvres
+git clone git@github.com:ivangzn/cvres.git
 ```
 
 Compile cvres:
