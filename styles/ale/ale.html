@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Resume.Person.Name}} - {{.Resume.Person.Role}}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap">
+</head>
+
+<body>
+    <header id="who">
+        <h1 id="who-name">{{.Resume.Person.Name}}</h1>
+        <h2 id="who-what">{{.Resume.Person.Role}}</h2>
+    </header>
+
+    <section id="contact">
+        <ul>
+            <li>
+                <span>{{.EmailSvg}}</span>
+                {{.Resume.Contact.Email}}
+            </li>
+            <li>
+                <span>{{.LocationSvg}}</span>
+                {{.Resume.Contact.Location}}
+            </li>
+            <li>
+                <span>{{.LinkedinSvg}}</span>
+                {{.Resume.Contact.LinkedIn}}
+            </li>
+        </ul>
+    </section>
+
+    {{range .Resume.Sections}}
+    <section class="info">
+        <h3 class="info-title">{{.Title | ToUpper}}</h3>
+        <hr>
+        {{range .Articles}}
+        <article>
+            <h4 class="info-what">{{.What}}</h4>
+            <h5 class="info-where">{{.Where}}</h5>
+            <span class="info-when">{{.When}}</span>
+            <p>{{.Desc}}</p>
+            {{if .List}}
+            <ul>
+                {{range .List}}
+                <li>{{.}}</li>
+                {{end}}
+            </ul>
+            {{end}}
+            {{if .FullList}}
+            <ul class="full-list">
+                {{range .FullList}}
+                <li>{{.}}</li>
+                {{end}}
+            </ul>
+            {{end}}
+        </article>
+        {{end}}
+    </section>
+    {{end}}
+</body>
+
+<style>
+    :root {
+        font-family: "Alegreya";
+        --main-margin: 20px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0px auto;
+        padding: 20mm;
+        background-color: #f4f4f4;
+    }
+
+    /*/// Who ///*/
+
+    #who {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin-bottom: var(--main-margin);
+    }
+
+    #who-name {
+        font-size: 36;
+        font-weight: bold;
+    }
+
+    #who-what {
+        font-size: 20px;
+        font-weight: normal;
+    }
+
+    /*/// Contact ///*/
+
+    #contact ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        margin-bottom: var(--main-margin);
+    }
+
+    #contact li {
+        display: flex;
+        align-items: center;
+    }
+
+    #contact li svg {
+        margin-right: 5px;
+    }
+
+    /*/// Info ///*/
+
+    /* Sections */
+
+    .info article {
+        position: relative;
+        margin: 10px 0px;
+    }
+
+    .info-title {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .info hr {
+        border-width: 1px;
+        border-color: black;
+        border-style: solid;
+    }
+
+    .info li {
+        list-style-type: none;
+        list-style-position: outside;
+
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+    }
+
+    .info li::before {
+        content: "•";
+        margin-right: 8px;
+    }
+
+    .info-what {
+        font-weight: bold;
+        font-size: 18px
+    }
+
+    .info-where {
+        font-weight: normal;
+        font-size: 16px;
+        font-style: italic;
+    }
+
+    .info-when {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    /* Lists */
+    .full-list {
+        column-count: 2;
+        column-gap: 20px;
+    }
+
+    .full-list {
+        break-inside: avoid;
+    }
+</style>
+
+</html>
