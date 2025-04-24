@@ -7,18 +7,18 @@ import (
 	"github.com/ivangzn/cvres/styles/ale"
 )
 
-// encoderCtor represents a constructor for a resume style.
-type encoderCtor func() resume.Style
+// styleCtor represents a constructor for a resume style.
+type styleCtor func() resume.Style
 
-// encoders holds references for the name and constructor of each style supported.
-var encoders = map[string]encoderCtor{
+// styles holds references for the name and constructor of each style supported.
+var styles = map[string]styleCtor{
 	"ale": ale.New,
 }
 
 // Names returns the list of available styles.
 func Names() []string {
-	names := make([]string, 0, len(encoders))
-	for name := range encoders {
+	names := make([]string, 0, len(styles))
+	for name := range styles {
 		names = append(names, name)
 	}
 	return names
@@ -26,9 +26,9 @@ func Names() []string {
 
 // NewStyle finds a style by its name. Returns nil and an error if the style doesn't exist.
 func NewStyle(name string) (resume.Style, error) {
-	newEncoder, ok := encoders[name]
+	newStyle, ok := styles[name]
 	if !ok {
 		return nil, errors.New("style not found")
 	}
-	return newEncoder(), nil
+	return newStyle(), nil
 }
