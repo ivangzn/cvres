@@ -7,12 +7,9 @@ import (
 	"github.com/ivangzn/cvres/styles/ale"
 )
 
-// styleCtor represents a constructor for a resume style.
-type styleCtor func() resume.Style
-
-// styles holds references for the name and constructor of each style supported.
-var styles = map[string]styleCtor{
-	"ale": ale.New,
+// styles maps style names to their corresponding rendering functions.
+var styles = map[string]resume.StyleFunc{
+	"ale": ale.Render,
 }
 
 // Names returns the list of available styles.
@@ -25,10 +22,10 @@ func Names() []string {
 }
 
 // NewStyle finds a style by its name. Returns nil and an error if the style doesn't exist.
-func NewStyle(name string) (resume.Style, error) {
-	newStyle, ok := styles[name]
+func NewStyle(name string) (resume.StyleFunc, error) {
+	s, ok := styles[name]
 	if !ok {
 		return nil, errors.New("style not found")
 	}
-	return newStyle(), nil
+	return s, nil
 }

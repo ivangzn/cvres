@@ -12,7 +12,7 @@ import (
 )
 
 type Resume struct {
-	style Style
+	style StyleFunc
 
 	Person   Person    `json:"person" yaml:"person"`
 	Contact  Contact   `json:"contact" yaml:"contact"`
@@ -45,7 +45,7 @@ type Article struct {
 }
 
 // NewResume creates a Resume that can be written to a io.Writer using WriteTo.
-func NewResume(style Style, decoder Decoder) (*Resume, error) {
+func NewResume(style StyleFunc, decoder Decoder) (*Resume, error) {
 	res := &Resume{style: style}
 	err := decoder.Decode(res)
 	if err != nil {
@@ -57,7 +57,7 @@ func NewResume(style Style, decoder Decoder) (*Resume, error) {
 // WriteTo writes a resume to a writer.
 func (r *Resume) WriteTo(w io.Writer) (int64, error) {
 	minifier := NewHTMLMinifier()
-	_, err := r.style.WriteTo(minifier, *r)
+	_, err := r.style(minifier, r)
 	if err != nil {
 		return 0, fmt.Errorf("style can't write to minifier: %w", err)
 	}
@@ -65,15 +65,9 @@ func (r *Resume) WriteTo(w io.Writer) (int64, error) {
 	return minifier.WriteTo(w)
 }
 
-func (r *Resume) SetStyle(style Style) {
-	r.style = style
-}
-
-// Style applies a specific way of rendering a Resume,
+// StyleFunc renders a Resume with a given style,
 // and writes the result to a io.Writer by using WriteTo.
-type Style interface {
-	WriteTo(io.Writer, Resume) (int64, error)
-}
+type StyleFunc func(io.Writer, *Resume) (int64, error)
 
 // Decoder is the interface that wraps the Decode method.
 //
