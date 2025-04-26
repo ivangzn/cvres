@@ -48,7 +48,7 @@ func (m *HTMLMinifier) Write(data []byte) (int, error) {
 func (m *HTMLMinifier) WriteTo(w io.Writer) (int64, error) {
 	minified, err := minify.Default.Bytes("text/html", m.content)
 	if err != nil {
-		return 0, fmt.Errorf("html couldn't be minified, falling back to original html: %w", err)
+		return 0, fmt.Errorf("html couldn't be minified: %w", err)
 	}
 
 	n, err := w.Write(minified)
