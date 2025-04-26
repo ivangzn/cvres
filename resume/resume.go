@@ -76,7 +76,8 @@ type Decoder interface {
 	Decode(any) error
 }
 
-// NewDecoder checks the file extension, and tries to guess the correct Decoder for that file.
+// NewDecoder checks the resume's profile data file extension,
+// and tries to guess the correct Decoder for that file.
 //
 // Returns nil and an error if the file extension isn't supported.
 func NewDecoder(file *os.File) (Decoder, error) {
