@@ -32,9 +32,9 @@ func Render(w io.Writer, r *resume.Resume) (int64, error) {
 		LinkedinSvg: template.HTML(static.LinkedinSvg),
 	}
 
-	tmpl, err := template.New("resume").Funcs(template.FuncMap{
-		"ToUpper": strings.ToUpper,
-	}).Parse(html)
+	tmpl := template.New("resume")
+	tmpl = tmpl.Funcs(template.FuncMap{"ToUpper": strings.ToUpper})
+	tmpl, err := tmpl.Parse(html)
 	if err != nil {
 		return 0, err
 	}
