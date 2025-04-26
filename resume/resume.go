@@ -11,6 +11,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
+// Resume represents an individual's professional profile data.
 type Resume struct {
 	style StyleFunc
 
@@ -19,22 +20,26 @@ type Resume struct {
 	Sections []Section `json:"sections" yaml:"sections"`
 }
 
+// Person represents an individual's personal data.
 type Person struct {
 	Name string `json:"name" yaml:"name"`
 	Role string `json:"role" yaml:"role"`
 }
 
+// Contact represents an individual's contact info.
 type Contact struct {
 	Email    string `json:"email" yaml:"email"`
 	Location string `json:"location" yaml:"location"`
 	LinkedIn string `json:"linkedin" yaml:"linkedin"`
 }
 
+// Section represents a generic container of an individual's relevant professional data.
 type Section struct {
 	Title    string    `json:"title" yaml:"title"`
 	Articles []Article `json:"articles" yaml:"articles"`
 }
 
+// Article represents entries within a section of an individual's relevant professional data.
 type Article struct {
 	What     string   `json:"what" yaml:"what"`
 	Where    string   `json:"where" yaml:"where"`
