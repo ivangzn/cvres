@@ -5,11 +5,13 @@ import (
 
 	"github.com/ivangzn/cvres/resume"
 	"github.com/ivangzn/cvres/styles/ale"
+	"github.com/ivangzn/cvres/styles/plain"
 )
 
 // styles maps style names to their corresponding rendering functions.
 var styles = map[string]resume.StyleFunc{
-	"ale": ale.Render,
+	"ale":   ale.Render,
+	"plain": plain.Render,
 }
 
 // Names returns the list of available styles.

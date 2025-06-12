@@ -1,0 +1,24 @@
+{{.Data.Person.Name}}
+{{.Data.Person.Role}}
+{{.Data.Contact.Email}}
+{{.Data.Contact.Location}}
+{{.Data.Contact.LinkedIn}}
+{{range .Data.Sections}}
+{{.Title}}
+{{range .Articles}}
+{{if .What}}{{.What}}{{end}}
+{{if .Where}}{{.Where}}{{end}}
+{{if .When}}{{.When}}{{end}}
+{{if .Desc}}{{.Desc}}{{end}}
+{{if .List}}
+{{range .List}}
+{{.}}
+{{end}}
+{{end}}
+{{if .FullList}}
+{{range .FullList}}
+{{.}}
+{{end}}
+{{end}}
+{{end}}
+{{end}}
