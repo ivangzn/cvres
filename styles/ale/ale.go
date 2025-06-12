@@ -17,16 +17,16 @@ var html string
 
 // templateData contains all the data needed by the template.
 type templateData struct {
-	Resume      resume.Resume
+	Data        resume.Data
 	EmailSvg    template.HTML
 	LocationSvg template.HTML
 	LinkedinSvg template.HTML
 }
 
 // Render renders a resume using the Ale style.
-func Render(w io.Writer, r *resume.Resume) (int64, error) {
+func Render(w io.Writer, d *resume.Data) (int64, error) {
 	data := templateData{
-		Resume:      *r,
+		Data:        *d,
 		EmailSvg:    template.HTML(static.EmailSvg),
 		LocationSvg: template.HTML(static.LocationSvg),
 		LinkedinSvg: template.HTML(static.LinkedinSvg),

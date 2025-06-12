@@ -55,7 +55,7 @@ func main() {
 		exit(err)
 	}
 
-	resume, err := resume.NewResume(style, decoder)
+	resume, err := resume.NewResumeFromDecoder(style, decoder)
 	if err != nil {
 		exit(err)
 	}
