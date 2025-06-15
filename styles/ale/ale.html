@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Resume.Person.Name}} - {{.Resume.Person.Role}}</title>
+    <title>{{.Data.Person.Name}} - {{.Data.Person.Role}}</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap">
@@ -12,28 +12,28 @@
 
 <body>
     <header id="who">
-        <h1 id="who-name">{{.Resume.Person.Name}}</h1>
-        <h2 id="who-what">{{.Resume.Person.Role}}</h2>
+        <h1 id="who-name">{{.Data.Person.Name}}</h1>
+        <h2 id="who-what">{{.Data.Person.Role}}</h2>
     </header>
 
     <section id="contact">
         <ul>
             <li>
                 <span>{{.EmailSvg}}</span>
-                {{.Resume.Contact.Email}}
+                {{.Data.Contact.Email}}
             </li>
             <li>
                 <span>{{.LocationSvg}}</span>
-                {{.Resume.Contact.Location}}
+                {{.Data.Contact.Location}}
             </li>
             <li>
                 <span>{{.LinkedinSvg}}</span>
-                {{.Resume.Contact.LinkedIn}}
+                {{.Data.Contact.LinkedIn}}
             </li>
         </ul>
     </section>
 
-    {{range .Resume.Sections}}
+    {{range .Data.Sections}}
     <section class="info">
         <h3 class="info-title">{{.Title | ToUpper}}</h3>
         <hr>

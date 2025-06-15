@@ -11,10 +11,18 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// Resume represents an individual's professional profile data.
+// StyleFunc renders a Resume with a given style,
+// and writes the result to a io.Writer by using WriteTo.
+type StyleFunc func(io.Writer, *Data) (int64, error)
+
+// Resume is the logical representation of an individual's professional profile data.
 type Resume struct {
 	style StyleFunc
+	Data  Data
+}
 
+// Data represents an individual's professional profile data.
+type Data struct {
 	Person   Person    `json:"person" yaml:"person"`
 	Contact  Contact   `json:"contact" yaml:"contact"`
 	Sections []Section `json:"sections" yaml:"sections"`
@@ -49,30 +57,36 @@ type Article struct {
 	FullList []string `json:"full-list" yaml:"full-list"`
 }
 
-// NewResume creates a Resume that can be written to a io.Writer using WriteTo.
-func NewResume(style StyleFunc, decoder Decoder) (*Resume, error) {
+// NewResumeFromDecoder decodes the data first,
+// and then creates a Resume that can be written to a io.Writer using WriteTo.
+func NewResumeFromDecoder(style StyleFunc, decoder Decoder) (*Resume, error) {
 	res := &Resume{style: style}
-	err := decoder.Decode(res)
+	err := decoder.Decode(&res.Data)
 	if err != nil {
 		return nil, err
 	}
+
 	return res, nil
+}
+
+// NewResume creates a Resume that can be written to a io.Writer using WriteTo.
+func NewResume(style StyleFunc, data Data) *Resume {
+	return &Resume{
+		style: style,
+		Data:  data,
+	}
 }
 
 // WriteTo writes a resume to a writer.
 func (r *Resume) WriteTo(w io.Writer) (int64, error) {
 	minifier := NewHTMLMinifier()
-	_, err := r.style(minifier, r)
+	_, err := r.style(minifier, &r.Data)
 	if err != nil {
 		return 0, fmt.Errorf("style can't write to minifier: %w", err)
 	}
 
 	return minifier.WriteTo(w)
 }
-
-// StyleFunc renders a Resume with a given style,
-// and writes the result to a io.Writer by using WriteTo.
-type StyleFunc func(io.Writer, *Resume) (int64, error)
 
 // Decoder is the interface that wraps the Decode method.
 //
