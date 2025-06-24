@@ -148,16 +148,14 @@ func TestGenerateResumeFromData(t *testing.T) {
 
 	style, err := styles.NewStyle("plain")
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 
 	resume := resume.NewResume(style, data)
 
 	_, err = resume.WriteTo(output)
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 
 	// Get the rendered HTML content
@@ -186,8 +184,7 @@ func TestGenerateResumeFromFile(t *testing.T) {
 
 	data, err := os.Open(file)
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 	defer data.Close()
 
@@ -195,25 +192,21 @@ func TestGenerateResumeFromFile(t *testing.T) {
 
 	decoder, err := resume.NewDecoder(data)
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 
 	style, err := styles.NewStyle("plain")
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 
 	resume, err := resume.NewResumeFromDecoder(style, decoder)
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 
 	_, err = resume.WriteTo(output)
 	if err != nil {
-		t.Error(err)
-		t.FailNow()
+		t.Fatal(err)
 	}
 }
