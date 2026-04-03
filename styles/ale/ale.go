@@ -24,7 +24,7 @@ type templateData struct {
 }
 
 // Render renders a resume using the Ale style.
-func Render(w io.Writer, d *resume.Data) (int64, error) {
+func Render(w io.Writer, d *resume.Data) error {
 	data := templateData{
 		Data:        *d,
 		EmailSvg:    template.HTML(static.EmailSvg),
@@ -36,16 +36,13 @@ func Render(w io.Writer, d *resume.Data) (int64, error) {
 	tmpl = tmpl.Funcs(template.FuncMap{"ToUpper": strings.ToUpper})
 	tmpl, err := tmpl.Parse(html)
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	bc := &resume.ByteCounter{}
-	mw := io.MultiWriter(w, bc)
-
-	err = tmpl.Execute(mw, data)
+	err = tmpl.Execute(w, data)
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	return bc.Count(), nil
+	return nil
 }

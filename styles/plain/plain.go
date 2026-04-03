@@ -17,7 +17,7 @@ type templateData struct {
 }
 
 // Render renders a resume using the Plain style.
-func Render(w io.Writer, d *resume.Data) (int64, error) {
+func Render(w io.Writer, d *resume.Data) error {
 	data := templateData{
 		Data: *d,
 	}
@@ -25,16 +25,13 @@ func Render(w io.Writer, d *resume.Data) (int64, error) {
 	tmpl := template.New("resume")
 	tmpl, err := tmpl.Parse(html)
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	bc := &resume.ByteCounter{}
-	mw := io.MultiWriter(w, bc)
-
-	err = tmpl.Execute(mw, data)
+	err = tmpl.Execute(w, data)
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	return bc.Count(), nil
+	return nil
 }
