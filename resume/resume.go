@@ -5,15 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"os"
-	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
 
 // StyleFunc renders a Resume with a given style,
 // and writes the result to a io.Writer by using WriteTo.
-type StyleFunc func(io.Writer, *Data) (int64, error)
+type StyleFunc func(io.Writer, *Data) error
 
 // Resume is the logical representation of an individual's professional profile data.
 type Resume struct {
@@ -80,7 +78,7 @@ func NewResume(style StyleFunc, data Data) *Resume {
 // WriteTo writes a resume to a writer.
 func (r *Resume) WriteTo(w io.Writer) (int64, error) {
 	minifier := NewHTMLMinifier()
-	_, err := r.style(minifier, &r.Data)
+	err := r.style(minifier, &r.Data)
 	if err != nil {
 		return 0, fmt.Errorf("style can't write to minifier: %w", err)
 	}
@@ -99,16 +97,13 @@ type Decoder interface {
 // and tries to guess the correct Decoder for that file.
 //
 // Returns nil and an error if the file extension isn't supported.
-func NewDecoder(file *os.File) (Decoder, error) {
-	var decoder Decoder
-	inType := filepath.Ext(file.Name())
-	switch inType {
+func NewDecoder(r io.Reader, ext string) (Decoder, error) {
+	switch ext {
 	case ".yaml", ".yml":
-		decoder = yaml.NewDecoder(file)
+		return yaml.NewDecoder(r), nil
 	case ".json":
-		decoder = json.NewDecoder(file)
+		return json.NewDecoder(r), nil
 	default:
 		return nil, errors.New("file extension not supported")
 	}
-	return decoder, nil
 }

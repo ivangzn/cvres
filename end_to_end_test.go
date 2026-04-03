@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"os"
+	"path/filepath"
 	"reflect"
 	"testing"
 
@@ -190,7 +191,7 @@ func TestGenerateResumeFromFile(t *testing.T) {
 
 	output := bytes.NewBuffer([]byte{})
 
-	decoder, err := resume.NewDecoder(data)
+	decoder, err := resume.NewDecoder(data, filepath.Ext(file))
 	if err != nil {
 		t.Fatal(err)
 	}

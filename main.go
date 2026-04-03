@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/ivangzn/cvres/resume"
@@ -18,7 +19,7 @@ func main() {
 	// Validate CLI flags.
 	if *listStyles {
 		names := strings.Join(styles.Names(), ", ")
-		fmt.Printf("avaiable styles: %s\n", names)
+		fmt.Printf("available styles: %s\n", names)
 		return
 	}
 
@@ -45,7 +46,7 @@ func main() {
 	}
 	defer output.Close()
 
-	decoder, err := resume.NewDecoder(data)
+	decoder, err := resume.NewDecoder(data, filepath.Ext(inPath))
 	if err != nil {
 		exit(err)
 	}
@@ -55,18 +56,18 @@ func main() {
 		exit(err)
 	}
 
-	resume, err := resume.NewResumeFromDecoder(style, decoder)
+	res, err := resume.NewResumeFromDecoder(style, decoder)
 	if err != nil {
 		exit(err)
 	}
 
-	_, err = resume.WriteTo(output)
+	_, err = res.WriteTo(output)
 	if err != nil {
 		exit(err)
 	}
 }
 
 func exit(cause any) {
-	fmt.Println(cause)
+	fmt.Fprintln(os.Stderr, cause)
 	os.Exit(1)
 }
