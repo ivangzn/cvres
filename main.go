@@ -34,34 +34,40 @@ func main() {
 	}
 
 	// Generate resume.
-	data, err := os.Open(inPath)
+	in, err := os.Open(inPath)
 	if err != nil {
 		exit(err)
 	}
-	defer data.Close()
+	defer in.Close()
 
-	output, err := os.Create(outPath)
+	out, err := os.Create(outPath)
 	if err != nil {
 		exit(err)
 	}
-	defer output.Close()
-
-	decoder, err := resume.NewDecoder(data, filepath.Ext(inPath))
-	if err != nil {
-		exit(err)
-	}
+	defer out.Close()
 
 	style, err := styles.NewStyle(*styleName)
 	if err != nil {
 		exit(err)
 	}
 
-	res, err := resume.NewResumeFromDecoder(style, decoder)
+	decoder, err := resume.NewDecoder(in, filepath.Ext(inPath))
 	if err != nil {
 		exit(err)
 	}
 
-	_, err = res.WriteTo(output)
+	var data resume.Data
+	err = decoder.Decode(&data)
+	if err != nil {
+		exit(err)
+	}
+
+	res := resume.NewResume(style, data)
+	if err != nil {
+		exit(err)
+	}
+
+	_, err = res.WriteTo(out)
 	if err != nil {
 		exit(err)
 	}

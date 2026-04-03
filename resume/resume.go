@@ -55,18 +55,6 @@ type Article struct {
 	FullList []string `json:"full-list" yaml:"full-list"`
 }
 
-// NewResumeFromDecoder decodes the data first,
-// and then creates a Resume that can be written to a io.Writer using WriteTo.
-func NewResumeFromDecoder(style StyleFunc, decoder Decoder) (*Resume, error) {
-	res := &Resume{style: style}
-	err := decoder.Decode(&res.Data)
-	if err != nil {
-		return nil, err
-	}
-
-	return res, nil
-}
-
 // NewResume creates a Resume that can be written to a io.Writer using WriteTo.
 func NewResume(style StyleFunc, data Data) *Resume {
 	return &Resume{
