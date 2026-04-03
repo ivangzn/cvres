@@ -5,3 +5,6 @@
 
 # IDEs
 .vscode
+
+# IA
+.agents
