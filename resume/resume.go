@@ -1,8 +1,8 @@
 package resume
 
 import (
+	"bufio"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 
@@ -81,17 +81,23 @@ type Decoder interface {
 	Decode(any) error
 }
 
-// NewDecoder checks the resume's profile data file extension,
-// and tries to guess the correct Decoder for that file.
+// NewDecoder peeks at the input to detect JSON or YAML,
+// and returns the matching Decoder.
 //
-// Returns nil and an error if the file extension isn't supported.
-func NewDecoder(r io.Reader, ext string) (Decoder, error) {
-	switch ext {
-	case ".yaml", ".yml":
-		return yaml.NewDecoder(r), nil
-	case ".json":
-		return json.NewDecoder(r), nil
-	default:
-		return nil, errors.New("file extension not supported")
+// Returns an error if the format can't be detected.
+func NewDecoder(r io.Reader) (Decoder, error) {
+	buf := bufio.NewReader(r)
+
+	peeked, err := buf.Peek(buf.Size())
+	if err != nil && err != io.EOF && err != bufio.ErrBufferFull {
+		return nil, fmt.Errorf("can't read input: %w", err)
 	}
+
+	switch guessFormat(peeked) {
+	case fileJSON:
+		return json.NewDecoder(buf), nil
+	case fileYAML:
+		return yaml.NewDecoder(buf), nil
+	}
+	return nil, fmt.Errorf("unknown format")
 }

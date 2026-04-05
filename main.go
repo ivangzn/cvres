@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/ivangzn/cvres/resume"
@@ -14,7 +14,31 @@ import (
 func main() {
 	styleName := flag.String("style", "ale", "style name to be used. Use -styles to list them all.")
 	listStyles := flag.Bool("styles", false, "show all style names.")
+
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: cvres [flags] [file]\n\n")
+		fmt.Fprintf(os.Stderr, "Reads resume data (JSON or YAML) from a file or stdin,\n")
+		fmt.Fprintf(os.Stderr, "and writes HTML to stdout.\n\n")
+		fmt.Fprintf(os.Stderr, "Examples:\n")
+		fmt.Fprintf(os.Stderr, "  cvres resume.yaml > output.html\n")
+		fmt.Fprintf(os.Stderr, "  cvres -style ale resume.json > output.html\n")
+		fmt.Fprintf(os.Stderr, "  cat resume.yaml | cvres > output.html\n")
+		fmt.Fprintf(os.Stderr, "Flags:\n")
+		flag.PrintDefaults()
+	}
+
 	flag.Parse()
+
+	var in io.Reader
+	if flag.Arg(0) == "" {
+		in = os.Stdin
+	} else {
+		f, err := os.Open(flag.Arg(0))
+		if err != nil {
+			exit(err)
+		}
+		in = f
+	}
 
 	// Validate CLI flags.
 	if *listStyles {
@@ -23,35 +47,13 @@ func main() {
 		return
 	}
 
-	inPath := flag.Arg(0)
-	if inPath == "" {
-		exit("missing input file path")
-	}
-
-	outPath := flag.Arg(1)
-	if outPath == "" {
-		outPath = "resume.html"
-	}
-
 	// Generate resume.
-	in, err := os.Open(inPath)
-	if err != nil {
-		exit(err)
-	}
-	defer in.Close()
-
-	out, err := os.Create(outPath)
-	if err != nil {
-		exit(err)
-	}
-	defer out.Close()
-
 	style, err := styles.NewStyle(*styleName)
 	if err != nil {
 		exit(err)
 	}
 
-	decoder, err := resume.NewDecoder(in, filepath.Ext(inPath))
+	decoder, err := resume.NewDecoder(in)
 	if err != nil {
 		exit(err)
 	}
@@ -63,11 +65,8 @@ func main() {
 	}
 
 	res := resume.NewResume(style, data)
-	if err != nil {
-		exit(err)
-	}
 
-	_, err = res.WriteTo(out)
+	_, err = res.WriteTo(os.Stdout)
 	if err != nil {
 		exit(err)
 	}

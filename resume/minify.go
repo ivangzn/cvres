@@ -7,7 +7,6 @@ import (
 	"github.com/tdewolff/minify/v2/minify"
 )
 
-
 // HTMLMinifier helps writing minified HTML content.
 //
 // The Write method writes the HTML content to be minified.
