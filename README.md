@@ -37,8 +37,7 @@ Supported formats:
 
 See a more readable specification of the format [here](example/README.md).
 
-cvres reads resume data from a **file argument** or **stdin**, and writes
-minified HTML to **stdout**:
+To generate a resume:
 
 ```bash
 # from a file
@@ -53,8 +52,8 @@ curl https://example.com/resume.yaml | cvres > output.html
 cat resume.json | cvres > output.html
 ```
 
-This generates a minified HTML file. To save it as PDF, open it in any web
-browser and use the print dialog.
+*This generates a minified HTML file. To save it as PDF, open it in any web
+browser and use the print dialog.*
 
 ## Styles
 
